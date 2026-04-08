@@ -17,15 +17,45 @@ const TVShowDetailContainer = () => {
     },
   })
 
-  const { videos, similar, recommendations } = data
+  const {
+    details,
+    credits,
+    videos,
+    watchProviders,
+    similar,
+    recommendations,
+    images,
+  } = data
   const trailerKey = extractTrailerKey(videos)
 
-  const video = {
-    thumbnail: trailerKey
-      ? `https://img.youtube.com/vi/${trailerKey}/maxresdefault.jpg`
-      : "",
-    url: trailerKey ? `https://www.youtube.com/embed/${trailerKey}` : "",
-  }
+  const video = trailerKey
+    ? {
+        thumbnail: `https://img.youtube.com/vi/${trailerKey}/maxresdefault.jpg`,
+        url: `https://www.youtube.com/embed/${trailerKey}`,
+      }
+    : { thumbnail: "", url: "" }
+
+  const meta = `${details.number_of_seasons} Season${details.number_of_seasons > 1 ? "s" : ""} • ${details.number_of_episodes} Episodes`
+
+  const extraBadges = [
+    details.original_language.toUpperCase(),
+    details.type,
+    ...details.networks.map((n) => n.name),
+  ]
+
+  const cast = credits.cast.slice(0, 15).map((c) => ({
+    id: c.id,
+    name: c.name,
+    character: c.character,
+    profilePath: c.profile_path,
+  }))
+
+  const providers = watchProviders.results?.US?.flatrate ?? []
+  const watchProvidersList = providers.map((p) => ({
+    provider_id: p.provider_id,
+    provider_name: p.provider_name,
+    logo_path: p.logo_path,
+  }))
 
   const similarItems: SimilarCardProps[] = similar.results
     .slice(0, 10)
@@ -73,9 +103,22 @@ const TVShowDetailContainer = () => {
     >
       <DetailsLayout
         isMovie={false}
+        title={details.name}
+        tagline={details.tagline || null}
+        overview={details.overview}
+        posterPath={details.poster_path}
+        genres={details.genres}
+        voteAverage={details.vote_average}
+        voteCount={details.vote_count}
+        status={details.status}
+        meta={meta}
+        extraBadges={extraBadges}
+        cast={cast}
+        watchProviders={watchProvidersList}
         recommendations={recommendationItems}
         similar={similarItems}
         video={video}
+        backdrops={images.backdrops}
       />
     </ErrorBoundary>
   )

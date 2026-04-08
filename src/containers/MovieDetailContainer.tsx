@@ -17,15 +17,46 @@ const MovieDetailContainer = () => {
     },
   })
 
-  const { videos, similar, recommendations } = data
+  const {
+    details,
+    credits,
+    videos,
+    watchProviders,
+    similar,
+    recommendations,
+    images,
+  } = data
   const trailerKey = extractTrailerKey(videos)
 
-  const video = {
-    thumbnail: trailerKey
-      ? `https://img.youtube.com/vi/${trailerKey}/maxresdefault.jpg`
-      : "",
-    url: trailerKey ? `https://www.youtube.com/embed/${trailerKey}` : "",
-  }
+  const video = trailerKey
+    ? {
+        thumbnail: `https://img.youtube.com/vi/${trailerKey}/maxresdefault.jpg`,
+        url: `https://www.youtube.com/embed/${trailerKey}`,
+      }
+    : { thumbnail: "", url: "" }
+
+  const meta = `${details.runtime} min`
+
+  const extraBadges = [
+    details.original_language.toUpperCase(),
+    ...(details.belongs_to_collection
+      ? [`Part of ${details.belongs_to_collection.name}`]
+      : []),
+  ]
+
+  const cast = credits.cast.slice(0, 15).map((c) => ({
+    id: c.id,
+    name: c.name,
+    character: c.character,
+    profilePath: c.profile_path,
+  }))
+
+  const providers = watchProviders.results?.US?.flatrate ?? []
+  const watchProvidersList = providers.map((p) => ({
+    provider_id: p.provider_id,
+    provider_name: p.provider_name,
+    logo_path: p.logo_path,
+  }))
 
   const similarItems: SimilarCardProps[] = similar.results
     .slice(0, 10)
@@ -73,9 +104,22 @@ const MovieDetailContainer = () => {
     >
       <DetailsLayout
         isMovie
+        title={details.title}
+        tagline={details.tagline || null}
+        overview={details.overview}
+        posterPath={details.poster_path}
+        genres={details.genres}
+        voteAverage={details.vote_average}
+        voteCount={details.vote_count}
+        status={details.status}
+        meta={meta}
+        extraBadges={extraBadges}
+        cast={cast}
+        watchProviders={watchProvidersList}
         recommendations={recommendationItems}
         similar={similarItems}
         video={video}
+        backdrops={images.backdrops}
       />
     </ErrorBoundary>
   )

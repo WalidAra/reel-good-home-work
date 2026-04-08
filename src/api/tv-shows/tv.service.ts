@@ -5,6 +5,7 @@ import type {
   VideosResponse,
   TVShowsResponse,
   WatchProvidersResponse,
+  ImagesResponse,
 } from "@/types"
 
 const headers = {
@@ -36,6 +37,10 @@ export async function fetchTVVideos(id: number): Promise<VideosResponse> {
   return tmdbFetch<VideosResponse>(`/tv/${id}/videos?language=en-US`)
 }
 
+export async function fetchTVImages(id: number): Promise<ImagesResponse> {
+  return tmdbFetch<ImagesResponse>(`/tv/${id}/images`)
+}
+
 export async function fetchTVSimilar(id: number): Promise<TVShowsResponse> {
   return tmdbFetch<TVShowsResponse>(`/tv/${id}/similar?language=en-US`)
 }
@@ -53,15 +58,31 @@ export async function fetchTVWatchProviders(
 }
 
 export async function fetchTVShowDetail(id: number) {
-  const [details, credits, videos, similar, recommendations, watchProviders] =
-    await Promise.all([
-      fetchTVShowDetails(id),
-      fetchTVCredits(id),
-      fetchTVVideos(id),
-      fetchTVSimilar(id),
-      fetchTVRecommendations(id),
-      fetchTVWatchProviders(id),
-    ])
+  const [
+    details,
+    credits,
+    videos,
+    similar,
+    recommendations,
+    watchProviders,
+    images,
+  ] = await Promise.all([
+    fetchTVShowDetails(id),
+    fetchTVCredits(id),
+    fetchTVVideos(id),
+    fetchTVSimilar(id),
+    fetchTVRecommendations(id),
+    fetchTVWatchProviders(id),
+    fetchTVImages(id),
+  ])
 
-  return { details, credits, videos, similar, recommendations, watchProviders }
+  return {
+    details,
+    credits,
+    videos,
+    similar,
+    recommendations,
+    watchProviders,
+    images,
+  }
 }
