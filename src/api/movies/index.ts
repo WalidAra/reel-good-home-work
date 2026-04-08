@@ -1,0 +1,1 @@
+export { fetchPopularMovies } from "./popular"

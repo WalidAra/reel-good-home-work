@@ -1,0 +1,1 @@
+export { fetchPopularTVShows } from "./popular"
