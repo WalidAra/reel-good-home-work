@@ -1,5 +1,1 @@
-const TVShowDetails = () => {
-  return <div>TVShowDetails</div>
-}
-
-export default TVShowDetails
+export { default } from "@/containers/TVShowDetailContainer"
