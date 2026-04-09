@@ -1,106 +1,106 @@
-import React from "react";
-import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
+import React from "react"
+import { FaGithub, FaInstagram, FaReddit, FaTwitter } from "react-icons/fa"
+import { AudioWaveform } from "lucide-react"
 
 interface Footer7Props {
   logo?: {
-    url: string;
-    src: string;
-    alt: string;
-    title: string;
-  };
+    url: string
+    title: string
+  }
   sections?: Array<{
-    title: string;
-    links: Array<{ name: string; href: string }>;
-  }>;
-  description?: string;
+    title: string
+    links: Array<{ name: string; href: string }>
+  }>
+  description?: string
   socialLinks?: Array<{
-    icon: React.ReactElement;
-    href: string;
-    label: string;
-  }>;
-  copyright?: string;
+    icon: React.ReactElement
+    href: string
+    label: string
+  }>
+  copyright?: string
   legalLinks?: Array<{
-    name: string;
-    href: string;
-  }>;
+    name: string
+    href: string
+  }>
 }
 
 const defaultSections = [
   {
-    title: "Product",
+    title: "Library",
     links: [
-      { name: "Overview", href: "#" },
-      { name: "Pricing", href: "#" },
-      { name: "Marketplace", href: "#" },
-      { name: "Features", href: "#" },
+      { name: "Favorites", href: "/favorites" },
+      { name: "Watch Later", href: "/watch-later" },
+      { name: "Watched", href: "/watched" },
     ],
   },
   {
-    title: "Company",
+    title: "Discover",
     links: [
-      { name: "About", href: "#" },
-      { name: "Team", href: "#" },
-      { name: "Blog", href: "#" },
-      { name: "Careers", href: "#" },
+      { name: "Search", href: "/search" },
+      { name: "Trending Movies", href: "/trending/movies" },
+      { name: "Trending TV Shows", href: "/trending/tv" },
     ],
   },
   {
-    title: "Resources",
+    title: "About",
     links: [
-      { name: "Help", href: "#" },
-      { name: "Sales", href: "#" },
-      { name: "Advertise", href: "#" },
-      { name: "Privacy", href: "#" },
+      { name: "TMDB Attribution", href: "https://www.themoviedb.org" },
+      { name: "API Docs", href: "https://developer.themoviedb.org" },
+      { name: "GitHub", href: "#" },
     ],
   },
-];
+]
 
 const defaultSocialLinks = [
-  { icon: <FaInstagram className="size-5" />, href: "#", label: "Instagram" },
-  { icon: <FaFacebook className="size-5" />, href: "#", label: "Facebook" },
   { icon: <FaTwitter className="size-5" />, href: "#", label: "Twitter" },
-  { icon: <FaLinkedin className="size-5" />, href: "#", label: "LinkedIn" },
-];
+  { icon: <FaInstagram className="size-5" />, href: "#", label: "Instagram" },
+  { icon: <FaReddit className="size-5" />, href: "#", label: "Reddit" },
+  { icon: <FaGithub className="size-5" />, href: "#", label: "GitHub" },
+]
 
 const defaultLegalLinks = [
-  { name: "Terms and Conditions", href: "#" },
+  { name: "Terms of Use", href: "#" },
   { name: "Privacy Policy", href: "#" },
-];
+]
 
 export const Footer7 = ({
   logo = {
-    url: "https://www.shadcnblocks.com",
-    src: "https://www.shadcnblocks.com/images/block/logos/shadcnblockscom-icon.svg",
-    alt: "logo",
-    title: "Shadcnblocks.com",
+    url: "/",
+    title: "ReelGood",
   },
   sections = defaultSections,
-  description = "A collection of components for your startup business or side project.",
+  description = "Track your favorite movies and TV shows. Build your watchlist, mark what you've watched, and never lose track of what to watch next.",
   socialLinks = defaultSocialLinks,
-  copyright = "© 2024 Shadcnblocks.com. All rights reserved.",
+  copyright = `© ${new Date().getFullYear()} ReelGood. All rights reserved.`,
   legalLinks = defaultLegalLinks,
 }: Footer7Props) => {
   return (
-    <section className="py-16 border-t px-4 lg:px-0">
+    <section className="border-t px-4 py-16 lg:px-0">
       <div className="container mx-auto">
         <div className="flex w-full flex-col justify-between gap-10 lg:flex-row lg:items-start lg:text-start">
           <div className="flex w-full flex-col justify-between gap-6 lg:items-start">
             {/* Logo */}
             <div className="flex items-center gap-2 lg:justify-start">
-              <a href={logo.url}>
-                <img
-                  src={logo.src}
-                  alt={logo.alt}
-                  title={logo.title}
-                  className="h-8"
-                />
+              <a href={logo.url} className="flex items-center gap-2">
+                <AudioWaveform className="h-8 text-rose-500" />
+                <h2 className="text-xl font-semibold">{logo.title}</h2>
               </a>
-              <h2 className="text-xl font-semibold">{logo.title}</h2>
             </div>
             <p className="max-w-[70%] text-sm text-muted-foreground">
               {description}
             </p>
-            <ul className="flex items-center space-x-6 rtl:space-x-reverse text-muted-foreground">
+            {/* TMDB attribution */}
+            <div className="flex items-center gap-2">
+              <img
+                src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg"
+                alt="TMDB"
+                className="h-4 opacity-60"
+              />
+              <span className="text-xs text-muted-foreground">
+                Data provided by TMDB
+              </span>
+            </div>
+            <ul className="flex items-center space-x-6 text-muted-foreground rtl:space-x-reverse">
               {socialLinks.map((social, idx) => (
                 <li key={idx} className="font-medium hover:text-primary">
                   <a href={social.href} aria-label={social.label}>
@@ -133,13 +133,12 @@ export const Footer7 = ({
           <ul className="order-1 flex flex-col gap-2 md:order-2 md:flex-row">
             {legalLinks.map((link, idx) => (
               <li key={idx} className="hover:text-primary">
-                <a href={link.href}> {link.name}</a>
+                <a href={link.href}>{link.name}</a>
               </li>
             ))}
           </ul>
         </div>
       </div>
     </section>
-  );
-};
-
+  )
+}
