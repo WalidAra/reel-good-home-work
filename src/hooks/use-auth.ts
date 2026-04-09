@@ -8,6 +8,7 @@ export const useAuth = () => {
   const sessionId = useAuthStore((s) => s.sessionId)
   const accountId = useAuthStore((s) => s.accountId)
   const account = useAuthStore((s) => s.account)
+  console.log("ACCOUNT_ID:", account?.id)
   const isReady = useAuthStore((s) => s.isReady)
   const isAuthenticated = useAuthStore((s) => Boolean(s.sessionId))
 

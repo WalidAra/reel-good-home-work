@@ -49,6 +49,13 @@ function ActionButton({
   const button = (
     <button
       type="button"
+      data-testid={
+        label === "Favorite"
+          ? "btn-favorite"
+          : label === "Watch Later"
+            ? "btn-watchlist"
+            : "btn-watched"
+      }
       onClick={onClick}
       disabled={isPending}
       className={cn(
@@ -183,7 +190,10 @@ function MediaCardContent({
   }
 
   return (
-    <div className="group/card relative flex flex-col overflow-hidden rounded-xl bg-card text-card-foreground shadow-xs ring-1 ring-foreground/10">
+    <div
+      data-testid="media-card"
+      className="group/card relative flex flex-col overflow-hidden rounded-xl bg-card text-card-foreground shadow-xs ring-1 ring-foreground/10"
+    >
       <AspectRatio ratio={2 / 3}>
         {posterPath ? (
           <img

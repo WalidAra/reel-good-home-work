@@ -53,6 +53,7 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
           body: { request_token: requestToken },
         }
       )
+      console.log("SESSION_ID:", session_id) // 👈 add this temporarily
 
       authStore.getState().setSession(session_id)
 
@@ -62,7 +63,7 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
 
       LOG("session", session_id, "account", account)
 
-      navigate("/", { replace: true })
+      navigate("/home", { replace: true })
     },
     [navigate]
   )

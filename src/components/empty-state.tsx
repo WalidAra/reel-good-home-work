@@ -26,7 +26,10 @@ export function EmptyState({ type }: EmptyStateProps) {
   const { icon: Icon, title, description } = config[type]
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4 rounded-lg border border-dashed p-12 text-center">
+    <div
+      data-testid="empty-state"
+      className="flex flex-col items-center justify-center gap-4 rounded-lg border border-dashed p-12 text-center"
+    >
       <Icon className="size-12 text-muted-foreground" />
       <div className="space-y-2">
         <h3 className="text-lg font-semibold text-foreground">{title}</h3>
