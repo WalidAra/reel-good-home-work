@@ -8,9 +8,15 @@ import { Badge } from "@/components/ui/badge"
 import BackdropCarousel from "@/components/backdrop-carousel"
 import type { BackdropImage } from "@/types"
 import { Separator } from "@/components/ui/separator"
+import { CardHeader, CardTitle } from "@/components/ui/card"
+import UserActionButtons from "../user-action-buttons"
 
 type Props = {
   isMovie: boolean
+  mediaId: number
+  mediaType: "movie" | "tv"
+  isLiked: boolean
+  isAddedToWatchLater: boolean
   recommendations: SimilarCardProps[]
   similar: SimilarCardProps[]
   video: {
@@ -50,6 +56,10 @@ const getStatusColor = (status: string) => {
 
 const DetailsLayout = ({
   isMovie = false,
+  mediaId,
+  mediaType,
+  isLiked,
+  isAddedToWatchLater,
   recommendations,
   similar,
   video,
@@ -144,18 +154,25 @@ const DetailsLayout = ({
             <Separator />
 
             {/* Poster + Title */}
-            <div className="flex gap-3 pb-4 flex-col md:flex-row">
+            <div className="flex flex-col gap-3 pb-4 md:flex-row">
               {posterPath && (
                 <img
                   src={`https://image.tmdb.org/t/p/w185${posterPath}`}
                   alt={title}
-                  className="md:w-40 hidden md:block w-auto shrink-0 rounded-xl object-cover shadow-lg "
+                  className="hidden w-auto shrink-0 rounded-xl object-cover shadow-lg md:block md:w-40"
                 />
               )}
               <div className="flex flex-col gap-1.5 pt-1">
-                <h2 className="text-3xl leading-snug font-bold text-white">
-                  {title}
-                </h2>
+                <CardHeader className="w-full">
+                  <CardTitle className="text-3xl">{title}</CardTitle>
+
+                  <UserActionButtons
+                    mediaType={mediaType}
+                    mediaId={mediaId}
+                    isLiked={isLiked}
+                    isAddedToWatchLater={isAddedToWatchLater}
+                  />
+                </CardHeader>
 
                 <div className="flex flex-wrap gap-1.5">
                   <Badge className="h-7 rounded-full bg-muted text-foreground">

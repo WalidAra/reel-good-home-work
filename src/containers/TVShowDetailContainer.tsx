@@ -4,6 +4,7 @@ import { ErrorBoundary } from "@/components/error-boundary"
 import DetailsLayout from "@/core/home/components/layout/details-layout"
 import { fetchTVShowDetail } from "@/api/tv-shows/tv.service"
 import { extractTrailerKey } from "@/lib/trailer"
+import { useAccountStates } from "@/hooks/use-account-states"
 import type { SimilarCardProps } from "@/types"
 
 const TVShowDetailContainer = () => {
@@ -27,6 +28,8 @@ const TVShowDetailContainer = () => {
     images,
   } = data
   const trailerKey = extractTrailerKey(videos)
+
+  const { data: accountState } = useAccountStates("tv", Number(id))
 
   const video = trailerKey
     ? {
@@ -103,6 +106,10 @@ const TVShowDetailContainer = () => {
     >
       <DetailsLayout
         isMovie={false}
+        mediaId={Number(id)}
+        mediaType="tv"
+        isLiked={accountState?.favorite ?? false}
+        isAddedToWatchLater={accountState?.watchlist ?? false}
         title={details.name}
         tagline={details.tagline || null}
         overview={details.overview}

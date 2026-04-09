@@ -1,4 +1,4 @@
-import { tmdbClient } from "@/lib/tmdb-client"
+import { tmdbFetch } from "@/lib/fetch"
 import type {
   MovieDetails,
   CreditsResponse,
@@ -8,25 +8,10 @@ import type {
   ImagesResponse,
 } from "@/types"
 
-const headers = {
-  accept: "application/json",
-  Authorization: `Bearer ${tmdbClient.apiKey}`,
-}
-
-async function tmdbFetch<T>(endpoint: string): Promise<T> {
-  const url = `${tmdbClient.baseUrl}${endpoint}`
-  const response = await fetch(url, {
-    method: "GET",
-    headers,
-  })
-  if (!response.ok) {
-    throw new Error(`Failed to fetch ${endpoint}: ${response.statusText}`)
-  }
-  return response.json()
-}
-
 export async function fetchMovieDetails(id: number): Promise<MovieDetails> {
-  return tmdbFetch<MovieDetails>(`/movie/${id}?language=en-US`)
+  return tmdbFetch<MovieDetails>(`/movie/${id}`, {
+    params: { language: "en-US" },
+  })
 }
 
 export async function fetchMovieCredits(id: number): Promise<CreditsResponse> {
@@ -34,7 +19,9 @@ export async function fetchMovieCredits(id: number): Promise<CreditsResponse> {
 }
 
 export async function fetchMovieVideos(id: number): Promise<VideosResponse> {
-  return tmdbFetch<VideosResponse>(`/movie/${id}/videos?language=en-US`)
+  return tmdbFetch<VideosResponse>(`/movie/${id}/videos`, {
+    params: { language: "en-US" },
+  })
 }
 
 export async function fetchMovieImages(id: number): Promise<ImagesResponse> {
@@ -42,15 +29,17 @@ export async function fetchMovieImages(id: number): Promise<ImagesResponse> {
 }
 
 export async function fetchMovieSimilar(id: number): Promise<MoviesResponse> {
-  return tmdbFetch<MoviesResponse>(`/movie/${id}/similar?language=en-US`)
+  return tmdbFetch<MoviesResponse>(`/movie/${id}/similar`, {
+    params: { language: "en-US" },
+  })
 }
 
 export async function fetchMovieRecommendations(
   id: number
 ): Promise<MoviesResponse> {
-  return tmdbFetch<MoviesResponse>(
-    `/movie/${id}/recommendations?language=en-US`
-  )
+  return tmdbFetch<MoviesResponse>(`/movie/${id}/recommendations`, {
+    params: { language: "en-US" },
+  })
 }
 
 export async function fetchMovieWatchProviders(

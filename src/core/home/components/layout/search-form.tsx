@@ -1,23 +1,40 @@
 "use client"
 
-import { Label } from "@/components/ui/label"
-import { SidebarInput } from "@/components/ui/sidebar"
-import { SearchIcon } from "lucide-react"
+import { useRef } from "react"
+import { useNavigate, useSearchParams, useLocation } from "react-router-dom"
+import { Search } from "lucide-react"
 
-export function SearchForm({ ...props }: React.ComponentProps<"form">) {
+export function SearchForm() {
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const location = useLocation()
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const value = searchParams.get("q") ?? ""
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && e.currentTarget.value.trim()) {
+      navigate(
+        `/search?q=${encodeURIComponent(e.currentTarget.value.trim())}`,
+        {
+          replace: location.pathname === "/search",
+        }
+      )
+      inputRef.current?.blur()
+    }
+  }
+
   return (
-    <form {...props}>
-      <div className="relative">
-        <Label htmlFor="search" className="sr-only">
-          Search
-        </Label>
-        <SidebarInput
-          id="search"
-          placeholder="Type to search..."
-          className="h-9 ps-7 max-w-96 rounded-full"
-        />
-        <SearchIcon className="pointer-events-none absolute top-1/2 inset-s-2 size-4 -translate-y-1/2 opacity-50 select-none" />
-      </div>
-    </form>
+    <div className="relative flex h-9 w-56 items-center">
+      <Search className="absolute left-3 h-4 w-4 text-muted-foreground" />
+      <input
+        ref={inputRef}
+        defaultValue={value}
+        key={value}
+        onKeyDown={handleKeyDown}
+        placeholder="Search movies, TV shows..."
+        className="h-full w-full rounded-full bg-[#252525] pr-4 pl-9 text-sm text-white outline-none placeholder:text-muted-foreground"
+      />
+    </div>
   )
 }

@@ -3,6 +3,10 @@ import { Separator } from "@/components/ui/separator"
 import { useSidebar } from "@/components/ui/sidebar"
 import { AudioWaveform, PanelLeftIcon } from "lucide-react"
 import { SearchForm } from "./search-form"
+import AuthDialog from "../../../auth/components/auth-dialog"
+import { AuthSwitch } from "@/components/hoc/guards/auth-switch"
+import UserMenu from "./site header/user-menu"
+
 
 export function SiteHeader() {
   const { toggleSidebar } = useSidebar()
@@ -23,16 +27,23 @@ export function SiteHeader() {
             orientation="vertical"
             className="me-2 data-vertical:h-4 data-vertical:self-auto"
           />
-          <div className="flex items-center gap-2" >
-            <AudioWaveform className="h-8 text-rose-500"  />
-            <h1 className="text-lg font-semibold hidden sm:block">ReelGood</h1>
+          <div className="flex items-center gap-2">
+            <AudioWaveform className="h-8 text-rose-500" />
+            <h1 className="hidden text-lg font-semibold sm:block">ReelGood</h1>
           </div>
         </div>
 
         <SearchForm />
 
         <div className="flex items-center gap-2">
-          <Button className="rounded-full">Sign In</Button>
+          <AuthSwitch
+            authenticated={UserMenu}
+            unauthenticated={() => (
+              <AuthDialog>
+                <Button className="rounded-full">Sign In</Button>
+              </AuthDialog>
+            )}
+          />
         </div>
       </div>
     </header>

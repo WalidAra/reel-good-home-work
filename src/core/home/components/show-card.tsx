@@ -67,7 +67,7 @@ const GENRE_MAP: Record<number, string> = {
 export function ShowCard(props: ShowCardProps) {
   const title = isMovie(props) ? props.title : props.name
   const date = isMovie(props) ? props.release_date : props.first_air_date
-  const linkPrefix = isMovie(props) ? "/movies" : "/tv"
+  const linkPrefix = isMovie(props) ? "/movies" : "/tv-shows"
   const { id, poster_path, vote_average, genre_ids } = props
 
   const releaseYear = new Date(date).getFullYear()
