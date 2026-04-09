@@ -162,8 +162,8 @@ const DetailsLayout = ({
                   className="hidden w-auto shrink-0 rounded-xl object-cover shadow-lg md:block md:w-40"
                 />
               )}
-              <div className="flex flex-col gap-1.5 pt-1">
-                <CardHeader className="w-full">
+              <div className="flex flex-col gap-1.5 pt-1 w-full">
+                <CardHeader className="w-full flex flex-col lg:flex-row items-start justify-between gap-4 p-0">
                   <CardTitle className="text-3xl">{title}</CardTitle>
 
                   <UserActionButtons

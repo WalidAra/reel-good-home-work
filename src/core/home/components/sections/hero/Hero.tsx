@@ -122,7 +122,7 @@ export function Hero({
                 {title}
               </h1>
 
-              <p className="line-clamp-3 max-w-[500px] text-base leading-relaxed text-gray-300 drop-shadow-lg sm:text-lg md:text-xl">
+              <p className="line-clamp-3 max-w-125 text-base leading-relaxed text-gray-300 drop-shadow-lg sm:text-lg md:text-xl">
                 {overview}
               </p>
 

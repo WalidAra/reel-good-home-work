@@ -1,4 +1,3 @@
-
 import { useState, useMemo, useEffect, useCallback } from "react"
 import { Link } from "react-router-dom"
 import { MediaCard } from "@/components/media-card"
@@ -91,6 +90,23 @@ export default function WatchlistContainer() {
         <div className="pb-4">
           <h1 className="text-xl font-bold text-white">{PAGE_TITLE}</h1>
         </div>
+        <div className="sticky top-0 z-10 bg-background pt-2">
+          <div className="flex gap-2 pb-4">
+            {(["all", "movie", "tv"] as const).map((f) => (
+              <button
+                key={f}
+                onClick={() => setFilter(f)}
+                className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+                  filter === f
+                    ? "bg-[#F6A290] text-black"
+                    : "bg-[#252525] text-muted-foreground hover:text-white"
+                }`}
+              >
+                {f === "all" ? "All" : f === "movie" ? "Movies" : "TV Shows"}
+              </button>
+            ))}
+          </div>
+        </div>
         <EmptyState type="watchlist" />
       </div>
     )
@@ -103,20 +119,22 @@ export default function WatchlistContainer() {
         <p className="text-sm text-muted-foreground">{filtered.length} items</p>
       </div>
 
-      <div className="flex gap-2 pb-4">
-        {(["all", "movie", "tv"] as const).map((f) => (
-          <button
-            key={f}
-            onClick={() => setFilter(f)}
-            className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
-              filter === f
-                ? "bg-[#F6A290] text-black"
-                : "bg-[#252525] text-muted-foreground hover:text-white"
-            }`}
-          >
-            {f === "all" ? "All" : f === "movie" ? "Movies" : "TV Shows"}
-          </button>
-        ))}
+      <div className="sticky top-0 z-10 bg-background pt-2">
+        <div className="flex gap-2 pb-4">
+          {(["all", "movie", "tv"] as const).map((f) => (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+                filter === f
+                  ? "bg-[#F6A290] text-black"
+                  : "bg-[#252525] text-muted-foreground hover:text-white"
+              }`}
+            >
+              {f === "all" ? "All" : f === "movie" ? "Movies" : "TV Shows"}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">

@@ -11,7 +11,6 @@ import {
   TVShowDetail,
   Search,
   LikedVideos,
-  Watched,
   WatchLater,
 } from "./pages"
 import { GridSkeleton } from "./components/skeltons/grid-skelton"
@@ -47,17 +46,6 @@ export const homeRoutes: RouteObject[] = [
           <ErrorFallbackWrapper>
             <Suspense fallback={<GridSkeleton />}>
               <LikedVideos />
-            </Suspense>
-          </ErrorFallbackWrapper>
-        ),
-      },
-
-      {
-        path: "watched",
-        element: (
-          <ErrorFallbackWrapper>
-            <Suspense fallback={<GridSkeleton />}>
-              <Watched />
             </Suspense>
           </ErrorFallbackWrapper>
         ),

@@ -85,8 +85,11 @@ export const useAddFavorite = () => {
       mediaId: number
       isFavorite: boolean
     }) => account.addFavorite(accountId!, mediaType, mediaId, isFavorite),
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["account", "favorite"] })
+      queryClient.invalidateQueries({
+        queryKey: ["account-states", variables.mediaType, variables.mediaId],
+      })
     },
   })
 }
@@ -161,8 +164,11 @@ export const useAddToWatchlist = () => {
       mediaId: number
       inWatchlist: boolean
     }) => account.addToWatchlist(accountId!, mediaType, mediaId, inWatchlist),
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["account", "watchlist"] })
+      queryClient.invalidateQueries({
+        queryKey: ["account-states", variables.mediaType, variables.mediaId],
+      })
     },
   })
 }

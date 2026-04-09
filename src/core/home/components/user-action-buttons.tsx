@@ -74,8 +74,12 @@ export default function UserActionButtons({
   )
 
   if (!isAuthenticated) {
-    return <AuthDialog>{buttons}</AuthDialog>
+    return (
+      <AuthDialog>
+        <div className="flex items-center gap-2">{buttons}</div>
+      </AuthDialog>
+    )
   }
 
-  return <CardAction className="flex items-center gap-2">{buttons}</CardAction>
+  return <CardAction className="flex flex-row items-center gap-2">{}</CardAction>
 }

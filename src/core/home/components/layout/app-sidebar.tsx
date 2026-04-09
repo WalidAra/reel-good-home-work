@@ -36,10 +36,6 @@ const data = {
           title: "liked videos",
           url: "/liked-videos",
         },
-        {
-          title: "Watched",
-          url: "/watched",
-        },
       ],
     },
   ],
