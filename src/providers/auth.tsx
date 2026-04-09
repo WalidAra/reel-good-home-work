@@ -63,7 +63,7 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
 
       LOG("session", session_id, "account", account)
 
-      navigate("/home", { replace: true })
+      navigate("/", { replace: true })
     },
     [navigate]
   )
