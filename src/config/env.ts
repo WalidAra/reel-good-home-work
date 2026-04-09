@@ -3,7 +3,11 @@ import { z } from "zod"
 const envSchema = z.object({
   VITE_TMDB_API_KEY: z.string().min(1, "TMDB_API_KEY is required"),
   VITE_APP_URL: z.string().url().optional().default("http://localhost:5173"),
-  TMDB_BASE_URL: z.string().url().optional().default("https://api.themoviedb.org/3"),
+  VITE_TMDB_BASE_URL: z
+    .string()
+    .url()
+    .optional()
+    .default("https://api.themoviedb.org/3"),
 })
 
 const envParseResult = envSchema.safeParse(import.meta.env)
