@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Star } from "lucide-react"
@@ -78,6 +78,12 @@ const DetailsLayout = ({
   backdrops,
 }: Props) => {
   const [showTrailer, setShowTrailer] = useState(false)
+  const topRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    topRef.current?.scrollIntoView({ behavior: "instant" })
+  }, [mediaId]) // re-fires if user navigates to a different media item
+
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -89,7 +95,7 @@ const DetailsLayout = ({
 
   return (
     <div className="relative w-full min-w-0 flex-1 overscroll-contain scroll-smooth bg-background">
-      <div className="w-full">
+      <div ref={topRef} className="w-full">
         <main className="grid grid-cols-1 gap-3 px-4 sm:px-6 lg:grid-cols-4">
           <div className="flex w-full flex-col gap-6 py-4 lg:col-span-3">
             <AspectRatio
@@ -162,8 +168,8 @@ const DetailsLayout = ({
                   className="hidden w-auto shrink-0 rounded-xl object-cover shadow-lg md:block md:w-40"
                 />
               )}
-              <div className="flex flex-col gap-1.5 pt-1 w-full">
-                <CardHeader className="w-full flex flex-col lg:flex-row items-start justify-between gap-4 p-0">
+              <div className="flex w-full flex-col gap-1.5 pt-1">
+                <CardHeader className="flex w-full flex-col items-start justify-between gap-4 p-0 lg:flex-row">
                   <CardTitle className="text-3xl">{title}</CardTitle>
 
                   <UserActionButtons
