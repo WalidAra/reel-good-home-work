@@ -81,5 +81,9 @@ export default function UserActionButtons({
     )
   }
 
-  return <CardAction className="flex flex-row items-center gap-2">{}</CardAction>
+  return (
+    <CardAction className="flex flex-row items-center gap-2">
+      {buttons}
+    </CardAction>
+  )
 }
